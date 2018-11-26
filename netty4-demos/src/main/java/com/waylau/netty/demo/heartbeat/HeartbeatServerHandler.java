@@ -9,17 +9,21 @@ import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
 
+import java.util.Date;
+
 /**
  * 说明：心跳服务器处理器
  *
  * @author <a href="http://www.waylau.com">waylau.com</a> 2015年11月6日
  */
 public class HeartbeatServerHandler extends ChannelInboundHandlerAdapter {
-	
-	// Return a unreleasable view on the given ByteBuf
+
+
+
+    // Return a unreleasable view on the given ByteBuf
 	// which will just ignore release and retain calls.
 	private static final ByteBuf HEARTBEAT_SEQUENCE = Unpooled
-			.unreleasableBuffer(Unpooled.copiedBuffer("Heartbeat",
+			.unreleasableBuffer(Unpooled.copiedBuffer("Heartbeat:"+new Date().toString(),
 					CharsetUtil.UTF_8));  
 
 	@Override
@@ -37,7 +41,9 @@ public class HeartbeatServerHandler extends ChannelInboundHandlerAdapter {
 				type = "all idle";
 			}
 
-			ctx.writeAndFlush(HEARTBEAT_SEQUENCE.duplicate()).addListener(
+			ctx.writeAndFlush(Unpooled
+                    .unreleasableBuffer(Unpooled.copiedBuffer("Heartbeat:"+new Date().toString()+"\n\r",
+                            CharsetUtil.UTF_8)).duplicate()).addListener(
 					ChannelFutureListener.CLOSE_ON_FAILURE);
  
 			System.out.println( ctx.channel().remoteAddress()+"超时类型：" + type);

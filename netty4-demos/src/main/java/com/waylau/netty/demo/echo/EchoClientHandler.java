@@ -1,9 +1,6 @@
 package com.waylau.netty.demo.echo;
 
 
-
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -21,6 +18,10 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 //         }
 ////         firstMessage.writeByte('\n');
           firstMessage = "hello\n";
+      }
+
+      public EchoClientHandler(String Message){
+          firstMessage = Message+"\n";
       }
   
       @Override

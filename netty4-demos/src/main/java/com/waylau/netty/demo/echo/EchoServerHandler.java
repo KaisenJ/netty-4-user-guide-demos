@@ -14,6 +14,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        //输出服务地址 以及客户端发来的信息
     	System.out.println(ctx.channel().remoteAddress()+"->Server :"+ msg.toString());
 //        ctx.write(msg); // (1)
 //        ctx.flush(); // (2)
