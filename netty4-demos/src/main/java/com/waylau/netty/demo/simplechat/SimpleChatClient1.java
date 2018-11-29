@@ -16,16 +16,16 @@ import java.io.InputStreamReader;
  * @author waylau.com
  * @date 2015-2-26
  */
-public class SimpleChatClient {
+public class SimpleChatClient1 {
 
     public static void main(String[] args) throws Exception{
-        new SimpleChatClient("localhost", 8088).run();
+        new SimpleChatClient1("localhost", 8088).run();
     }
 
     private final String host;
     private final int port;
 
-    public SimpleChatClient(String host, int port){
+    public SimpleChatClient1(String host, int port){
         this.host = host;
         this.port = port;
     }

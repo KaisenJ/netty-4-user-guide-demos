@@ -28,24 +28,27 @@ public final class EchoClient {
     public static void main(String[] args) throws Exception {
 
         // Configure the client.
+        //创建客户端处理链接 事件循环器 客户端只需创建一个
         EventLoopGroup group = new NioEventLoopGroup();
         try {
-            Bootstrap b = new Bootstrap();
-            b.group(group)
-             .channel(NioSocketChannel.class)
-             .option(ChannelOption.TCP_NODELAY, true)
+            Bootstrap b = new Bootstrap(); //客户端链接创建辅助类
+            b.group(group) //加入事件处理循环器
+             .channel(NioSocketChannel.class) //指定处理传入链接的通道类
+             .option(ChannelOption.TCP_NODELAY, true) //设置链接是否有延迟
              .handler(new ChannelInitializer<SocketChannel>() {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
                      ChannelPipeline p = ch.pipeline();
+                     //定义数据接收 方式  DelimiterBasedFrameDecoder 的设置必须和服务器一致 否则无法正常解析
                 	 p.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
                      p.addLast("decoder", new StringDecoder());
                      p.addLast("encoder", new StringEncoder());
+                     //客户端自定义事件处理Handler
                      p.addLast(new EchoClientHandler());
                  }
              });
 
-            // Start the client.
+            // Start the client. 开启链接
             ChannelFuture f = b.connect(HOST, PORT).sync();
 
             // Wait until the connection is closed.

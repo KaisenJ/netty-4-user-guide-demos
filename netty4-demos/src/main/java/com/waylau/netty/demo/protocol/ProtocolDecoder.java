@@ -6,7 +6,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**
  * 说明：
- *
+ * 自定义协议 编码器
  * @author <a href="http://www.waylau.com">waylau.com</a> 2015年11月11日 
  */
 public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
@@ -19,11 +19,11 @@ public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
 	private int len; // 长度
  
 	/**
-	 * @param maxFrameLength
-	 * @param lengthFieldOffset
-	 * @param lengthFieldLength
-	 * @param lengthAdjustment
-	 * @param initialBytesToStrip
+	 * @param maxFrameLength 最大帧长度
+	 * @param lengthFieldOffset 消息长度偏移量
+	 * @param lengthFieldLength 最大消息长度
+	 * @param lengthAdjustment 长度调节量
+	 * @param initialBytesToStrip 初始码去除
 	 */
 	public ProtocolDecoder(int maxFrameLength, int lengthFieldOffset,
 			int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip) {
@@ -32,12 +32,12 @@ public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
  	}
 
 	/**
-	 * @param maxFrameLength
-	 * @param lengthFieldOffset
-	 * @param lengthFieldLength
-	 * @param lengthAdjustment
-	 * @param initialBytesToStrip
-	 * @param failFast
+	 * @param maxFrameLength 最大帧长度
+	 * @param lengthFieldOffset 消息长度偏移量
+	 * @param lengthFieldLength 最大消息长度
+	 * @param lengthAdjustment 消息长度调节量
+	 * @param initialBytesToStrip 初始字节码
+	 * @param failFast 是否失败
 	 */
 	public ProtocolDecoder(int maxFrameLength, int lengthFieldOffset,
 			int lengthFieldLength, int lengthAdjustment,

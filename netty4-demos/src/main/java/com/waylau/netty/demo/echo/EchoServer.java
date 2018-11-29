@@ -25,23 +25,30 @@ public class EchoServer {
     }
 
     public void run() throws Exception {
+        //创建 两个处理I/O操作的多线程循环处理器
+        // boss 接收传入的链接 并将其注册到 worker上
+        // worker 处理已经传入的链接
         EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
-            ServerBootstrap b = new ServerBootstrap(); // (2)
-            b.group(bossGroup, workerGroup)
-             .channel(NioServerSocketChannel.class) // (3)
-             .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
+            ServerBootstrap b = new ServerBootstrap(); // (2)配置辅助类
+            b.group(bossGroup, workerGroup) //加入 boss 链接接收组 worker 链接处理组
+             .channel(NioServerSocketChannel.class) // (3) 指定处理链接的通道类
+             .childHandler(new ChannelInitializer<SocketChannel>() { // (4) 开始处理新传入的Channel ChannelInitializer帮助配置新的Channel的类
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
+                    // DelimiterBasedFrameDecoder 数据传输长度设置 读取设置 maxFrameLength 一次解析最大数据长度
                 	 ch.pipeline().addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-                     ch.pipeline().addLast("decoder", new StringDecoder());
-                     ch.pipeline().addLast("encoder", new StringEncoder());
+                     //Decoder 编码器
+                	 ch.pipeline().addLast("decoder", new StringDecoder());
+                     //Encoder 解码器
+                	 ch.pipeline().addLast("encoder", new StringEncoder());
+                	 //自定义事件处理 Handler
                      ch.pipeline().addLast(new EchoServerHandler());
                  }
              })
-             .option(ChannelOption.SO_BACKLOG, 128)          // (5)
-             .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
+             .option(ChannelOption.SO_BACKLOG, 128)          // (5) 设置 backlog 大小
+             .childOption(ChannelOption.SO_KEEPALIVE, true); // (6) 设置服务 活性
 
             // 绑定端口，开始接收进来的连接
             ChannelFuture f = b.bind(port).sync(); // (7)

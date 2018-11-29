@@ -65,6 +65,13 @@ public class SecureChatServerHandler extends SimpleChannelInboundHandler<String>
 	protected void channelRead0(ChannelHandlerContext ctx, String msg)
 			throws Exception {
 		// TODO Auto-generated method stub
-		
+        System.out.println(msg);
+
+
+        for (Channel s:channels) {
+            if (ctx.channel()!=s){
+                s.writeAndFlush(msg);
+            }
+        }
 	}
 }

@@ -9,12 +9,16 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class TimeServerHandler extends ChannelInboundHandlerAdapter {
 	
 	@Override
-    public void channelActive(final ChannelHandlerContext ctx) { // (1)
-        final ByteBuf time = ctx.alloc().buffer(4); // (2)
+    public void channelActive(final ChannelHandlerContext ctx) { // (1) 链接建立事件
+        final ByteBuf time = ctx.alloc().buffer(4); // (2) 设置发送消息的字节长度
         time.writeInt((int) (System.currentTimeMillis() / 1000L + 2208988800L));
 
-        final ChannelFuture f = ctx.writeAndFlush(time); // (3)
-        f.addListener(new ChannelFutureListener() {
+        final ChannelFuture f = ctx.writeAndFlush(time); // (3) 发送消息
+        f.addListener(new ChannelFutureListener() { //设置监听
+            /**
+             * 处理操作完成 调用
+             * @param future
+             */
             @Override
             public void operationComplete(ChannelFuture future) {
                 assert f == future;

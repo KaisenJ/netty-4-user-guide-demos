@@ -21,11 +21,11 @@ public class ProtocolServer {
 
 	private int port;
 	
-	private static final int MAX_FRAME_LENGTH = 1024 * 1024;
-	private static final int LENGTH_FIELD_LENGTH = 4;
-	private static final int LENGTH_FIELD_OFFSET = 6;
-	private static final int LENGTH_ADJUSTMENT = 0;
-	private static final int INITIAL_BYTES_TO_STRIP = 0;
+	private static final int MAX_FRAME_LENGTH = 1024 * 1024; //最大帧长度
+	private static final int LENGTH_FIELD_LENGTH = 4; //定长字段长度
+	private static final int LENGTH_FIELD_OFFSET = 6; //定长长度字段偏移量
+	private static final int LENGTH_ADJUSTMENT = 0; //定长字段可调节量
+	private static final int INITIAL_BYTES_TO_STRIP = 0; //初始字节去除
 	
 	/**
 	 * 
@@ -44,16 +44,19 @@ public class ProtocolServer {
 	             .childHandler(new ChannelInitializer<SocketChannel>() { // (4)
 	                 @Override
 	                 public void initChannel(SocketChannel ch) throws Exception {
+	                     //设置自定义协议编码器
 	 					ch.pipeline().addLast("decoder",
 								new ProtocolDecoder(MAX_FRAME_LENGTH,
 										LENGTH_FIELD_OFFSET,LENGTH_FIELD_LENGTH, 
 										LENGTH_ADJUSTMENT, INITIAL_BYTES_TO_STRIP));
+	 					//设置自定义消息解码器
 	                     ch.pipeline().addLast("encoder", new ProtocolEncoder());
+	                     //设置自定义 事件处理器
 	                     ch.pipeline().addLast(new ProtocolServerHandler());
 	                 }
 	             })
 	             .option(ChannelOption.SO_BACKLOG, 128)          // (5)
-	             .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
+	             .childOption(ChannelOption.SO_KEEPALIVE, true); // (6)通道是否保活
 
 	            // 绑定端口，开始接收进来的连接
 	            ChannelFuture f = b.bind(port).sync(); // (7)

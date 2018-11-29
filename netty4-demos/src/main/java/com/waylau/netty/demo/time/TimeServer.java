@@ -54,7 +54,7 @@ public class TimeServer {
         if (args.length > 0) {
             port = Integer.parseInt(args[0]);
         } else {
-            port = 8080;
+            port = 8081;
         }
         new TimeServer(port).run();
     }

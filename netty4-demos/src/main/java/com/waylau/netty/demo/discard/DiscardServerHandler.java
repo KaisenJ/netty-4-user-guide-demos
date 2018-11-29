@@ -43,7 +43,7 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
 	            System.out.flush();
 	        }
 	    } finally {
-	        //显示释放通道  ReferenceCountUtil 引用类计数工具类
+	        //显示释放通道  ReferenceCountUtil 引用类计数工具类 在没有写入操作时 需要显示释放读取指针
 	        ReferenceCountUtil.release(msg); // (2)
 	    }
         

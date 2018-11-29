@@ -18,14 +18,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  */
 public class ProtocolClient {
 
-	private String host;
-	private int port;
+	private String host; //IP地址
+	private int port;//端口号
 
-	private static final int MAX_FRAME_LENGTH = 1024 * 1024;
-	private static final int LENGTH_FIELD_LENGTH = 4;
-	private static final int LENGTH_FIELD_OFFSET = 6;
-	private static final int LENGTH_ADJUSTMENT = 0;
-	private static final int INITIAL_BYTES_TO_STRIP = 0;
+	private static final int MAX_FRAME_LENGTH = 1024 * 1024;//最大帧长度
+	private static final int LENGTH_FIELD_LENGTH = 4; //定长字段长度
+	private static final int LENGTH_FIELD_OFFSET = 6; //定长字段长度偏移量
+	private static final int LENGTH_ADJUSTMENT = 0; //定长字段可变量
+	private static final int INITIAL_BYTES_TO_STRIP = 0;//初始字节去除
 
 	/**
 	 * 
