@@ -10,8 +10,8 @@ public class ProtocolHeader{
  
 	private byte magic; 	// 魔数
 	private byte msgType;	// 消息类型
-	private short reserve;	// 保留字
-	private short sn;		// 序列号
+//	private short reserve;	// 保留字
+//	private short sn;		// 序列号
 	private int len;		// 长度
 	
 	public byte getMagic() {
@@ -26,18 +26,18 @@ public class ProtocolHeader{
 	public void setMsgType(byte msgType) {
 		this.msgType = msgType;
 	}
-	public short getReserve() {
-		return reserve;
-	}
-	public void setReserve(short reserve) {
-		this.reserve = reserve;
-	}
-	public short getSn() {
-		return sn;
-	}
-	public void setSn(short sn) {
-		this.sn = sn;
-	}
+//	public short getReserve() {
+//		return reserve;
+//	}
+//	public void setReserve(short reserve) {
+//		this.reserve = reserve;
+//	}
+//	public short getSn() {
+//		return sn;
+//	}
+//	public void setSn(short sn) {
+//		this.sn = sn;
+//	}
 	public int getLen() {
 		return len;
 	}
@@ -46,15 +46,33 @@ public class ProtocolHeader{
 	}
 	public ProtocolHeader() {
 	}
-	/**
+
+    public ProtocolHeader(byte magic, byte msgType, int len) {
+        this.magic = magic;
+        this.msgType = msgType;
+        this.len = len;
+    }
+
+    /**
 	 * 
 	 */
-	public ProtocolHeader(byte magic, byte msgType,short reserve,short sn,int len) {
-		this.magic = magic;
-		this.msgType = msgType;
-		this.reserve = reserve;
-		this.sn = sn;
-		this.len = len;
-	}
+//	public ProtocolHeader(byte magic, byte msgType,short reserve,short sn,int len) {
+//		this.magic = magic;
+//		this.msgType = msgType;
+////		this.reserve = reserve;
+////		this.sn = sn;
+//		this.len = len;
+//	}
 
+
+    @Override
+    public String toString() {
+        return "ProtocolHeader{" +
+                "magic=" + magic +
+                ", msgType=" + msgType +
+//                ", reserve=" + reserve +
+//                ", sn=" + sn +
+                ", len=" + len +
+                '}';
+    }
 }

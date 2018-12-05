@@ -62,8 +62,9 @@ public class ProtocolDecoderDeprecation extends ByteToMessageDecoder {
 
 //		ProtocolBody body2 = new ProtocolBody();
 //		body2.setBody(body);
-		ProtocolHeader protocolHeader = new ProtocolHeader(magic, msgType,
-				reserve, sn, len);
+//		ProtocolHeader protocolHeader = new ProtocolHeader(magic, msgType,
+//				reserve, sn, len);
+        ProtocolHeader protocolHeader = new ProtocolHeader(magic,msgType,len);
 		//msg.setProtocolBody(body2);
 		msg.setBody(body);
 		msg.setProtocolHeader(protocolHeader);

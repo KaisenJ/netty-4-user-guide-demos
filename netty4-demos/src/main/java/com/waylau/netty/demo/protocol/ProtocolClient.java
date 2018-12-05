@@ -23,7 +23,7 @@ public class ProtocolClient {
 
 	private static final int MAX_FRAME_LENGTH = 1024 * 1024;//最大帧长度
 	private static final int LENGTH_FIELD_LENGTH = 4; //定长字段长度
-	private static final int LENGTH_FIELD_OFFSET = 6; //定长字段长度偏移量
+	private static final int LENGTH_FIELD_OFFSET = 2; //定长字段长度偏移量
 	private static final int LENGTH_ADJUSTMENT = 0; //定长字段可变量
 	private static final int INITIAL_BYTES_TO_STRIP = 0;//初始字节去除
 
@@ -68,8 +68,8 @@ public class ProtocolClient {
 				ProtocolHeader protocolHeader = new ProtocolHeader();
 				protocolHeader.setMagic((byte) 0x01);
 				protocolHeader.setMsgType((byte) 0x01);
-				protocolHeader.setReserve((short) 0);
-				protocolHeader.setSn((short) 0);
+//				protocolHeader.setReserve((short) 0);
+//				protocolHeader.setSn((short) 0);
 				String body = "床前明月光疑是地上霜";
 				StringBuffer sb = new StringBuffer();
 				for (int i = 0; i < 2700; i++) {

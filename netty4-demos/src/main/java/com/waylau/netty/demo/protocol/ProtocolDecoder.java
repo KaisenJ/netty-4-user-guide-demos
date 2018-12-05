@@ -10,7 +10,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
  * @author <a href="http://www.waylau.com">waylau.com</a> 2015年11月11日 
  */
 public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
-	private static final int HEADER_SIZE = 10;
+	private static final int HEADER_SIZE = 6;
 
 	private byte magic; // 魔数
 	private byte msgType; // 消息类型
@@ -61,21 +61,29 @@ public class ProtocolDecoder extends LengthFieldBasedFrameDecoder {
 
 		magic = in.readByte();
 		msgType = in.readByte();
-		reserve = in.readShort();
-		sn = in.readShort();
+//		reserve = in.readShort();
+//		sn = in.readShort();
 		len = in.readInt();
 
 		if (in.readableBytes() < len) {
 			return null; // until we have the entire payload return
 		}
 
+//		ByteBuf m = in.readBytes(magic);
+//		byte[] t=new byte[m.readableBytes()];
+//        System.out.println(new String(t,"UTF-8"));
+
 		ByteBuf buf = in.readBytes(len);
 		byte[] req = new byte[buf.readableBytes()];
 		buf.readBytes(req);
 		String body = new String(req, "UTF-8");
 		ProtocolMsg msg = new ProtocolMsg();
-		ProtocolHeader protocolHeader = new ProtocolHeader(magic, msgType,
-				reserve, sn, len);
+//		ProtocolHeader protocolHeader = new ProtocolHeader(magic, msgType,
+//				reserve, sn, len);
+        ProtocolHeader protocolHeader = new ProtocolHeader(magic,msgType,len);
+
+        System.out.println(protocolHeader.toString());
+
 		msg.setBody(body);
 		msg.setProtocolHeader(protocolHeader);
 		return msg;

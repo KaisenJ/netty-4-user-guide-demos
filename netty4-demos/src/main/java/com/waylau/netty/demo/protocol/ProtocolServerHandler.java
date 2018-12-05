@@ -34,4 +34,10 @@ public class ProtocolServerHandler extends SimpleChannelInboundHandler<Object> {
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.flush(); //刷新通道
     }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+	    ctx.close();
+        super.exceptionCaught(ctx, cause);
+    }
 }

@@ -66,8 +66,8 @@ public class ProtocolEncoder extends MessageToByteEncoder<ProtocolMsg> {
 		
 		out.writeByte(header.getMagic());
 		out.writeByte(header.getMsgType());
-		out.writeShort(header.getReserve());
-		out.writeShort(header.getSn());
+//		out.writeShort(header.getReserve());
+//		out.writeShort(header.getSn());
 		out.writeInt(bodySize);
 		out.writeBytes(bodyBytes);
 	}
